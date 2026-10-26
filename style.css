@@ -1,0 +1,30 @@
+/* this is a CSS comment */
+
+/* here, we change some of the default styles on our main document elements */
+html, body {
+	margin: 0;
+	background-color: rgb(4, 12, 227);
+}
+
+@media(max-width: 767px) {
+	html, body {
+		background-color: #00ff00;
+	}
+}
+
+body {
+	padding: 20px;
+	/*change color of text to white*/
+	color: #ffffff;
+}
+
+.silly-text {
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	color: #ffffff;
+	font-size: 40px;
+	text-wrap: balance;
+}
+
+.centre-text {
+	text-align: center;
+}
