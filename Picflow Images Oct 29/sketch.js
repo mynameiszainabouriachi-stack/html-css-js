@@ -125,9 +125,22 @@ fill(255, 255, 0, 60);      // yellow
       imgHeight
     );
     //image(activeImg, width / 2 - imgWidth / 2, height / 2 - imgHeight / 2, imgWidth, imgHeight);
+      textAlign(CENTER, CENTER);
+    textSize(26);
+    fill(0);
+    text(
+      "Open the letters and sort them : Keep or Trash !",
+      iconW,
+      height - iconSize + 50 - 40,
+      width - iconW * 2,
+      iconSize - 50
+    );
   }
-  
 }
+
+
+  
+
 
 function overLetter() {
   let iconW = iconSize * (1668 / 2388);
