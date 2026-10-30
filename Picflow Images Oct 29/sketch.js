@@ -5,6 +5,7 @@ let imgHeight = 400;
 let imgWidth = imgHeight * (1668 / 2388);
 let trashImg, keepfolderImg;
 let imagesLoaded = 0;
+let font;
 let gap = 40;
 
 let activeLetterType = 0;
@@ -41,16 +42,52 @@ async function setup() {
   // Load the image.
 
   await loadimages();
-
+  
   print(letters);
   createCanvas(windowWidth, windowHeight);
-
+  
   letterX = width / 2;
   letterY = height / 2;
+
+  textSize(22);
+  fill('yellow');
+  text('Swiss Mailbox Madness', 6, 20);
+  fill('cornflowerblue');
+  text('Swiss Mailbox Madness', 6, 45);
+  fill('tomato');
+  text('Swiss Mailbox Madness', 6, 70);
+  fill('limegreen');
+  text('Swiss Mailbox Madness', 6, 95);
+  // text add
+  //textFont("Helvetica");
+  //textSize(32);
+  //textAlign(letterX, letterY);
 }
 
 function draw() {
   background(255, 253, 240);
+
+  // text add
+  //text('Swiss Mailbox Madness', 0, 0);
+  //describe('The text "Swiss Mailbox Madness" written in white and spinning in 3D.');
+let msg = 'Swiss Mailbox Madness';
+  let rowH = height / 4;
+  textFont("forma DJR text");
+  textAlign(CENTER, CENTER);
+  textSize(100);
+  textSize(min(100 * width / textWidth(msg), rowH));
+
+fill(255, 255, 0, 60);      // yellow
+  text(msg, width / 2, rowH * 0.5);
+  fill(100, 149, 237, 50);    // cornflowerblue
+  text(msg, width / 2, rowH * 1.5);
+  fill(255, 99, 71, 50);      // tomato
+  text(msg, width / 2, rowH * 2.5);
+  fill(50, 205, 50, 50);      // limegreen
+  text(msg, width / 2, rowH * 3.5);
+
+
+
   if (imagesLoaded == letters.length + 2) {
     //const activeLetter = letters[activeLetterType];
 
@@ -85,6 +122,7 @@ function draw() {
     );
     //image(activeImg, width / 2 - imgWidth / 2, height / 2 - imgHeight / 2, imgWidth, imgHeight);
   }
+  
 }
 
 function overLetter() {
