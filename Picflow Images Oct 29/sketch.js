@@ -8,6 +8,7 @@ let imagesLoaded = 0;
 let font;
 let folderSound;
 let trashSound;
+let bgSound;
 let gap = 40;
 
 let activeLetterType = 0;
@@ -39,6 +40,9 @@ async function loadimages() {
   folderImg = await loadImage("keep-folder.webp");
   folderSound = new Audio("folder-sound.mp3");
   trashSound = new Audio("trash-sound.mp3");
+  bgSound = new Audio("background.mp3");
+  bgSound.loop = true;
+  bgSound.volume = 0.3;
   imagesLoaded++;
 }
 
@@ -52,6 +56,9 @@ async function setup() {
   
   letterX = width / 2;
   letterY = height / 2;
+    bgSound.play().catch(() => {
+    window.addEventListener("pointerdown", () => bgSound.play(), { once: true });
+  });
 
   textSize(22);
   fill('yellow');
