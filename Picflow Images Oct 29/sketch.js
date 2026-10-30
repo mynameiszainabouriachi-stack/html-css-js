@@ -162,7 +162,8 @@ function mouseReleased() {
       folderSound.currentTime = 0;
       folderSound.play().catch((e) => console.log("SOUND ERROR:", e.message, folderSound.src));
     }
-        if (mouseX < iconSize * (1668 / 2388) - 50 && mouseY > height - iconSize + 50) {
+    console.log("mouseX", mouseX, "iconSize * (1668 / 2388) - 50", iconSize * (1668 / 2388) - 50, "mouseY", mouseY, "height - iconSize + 50", height - iconSize + 50);
+    if (mouseX < iconSize * (1668 / 2388) - 50 && mouseY > height - iconSize + 50) {
       trashSound.currentTime = 0;
       trashSound.play().catch((e) => console.log("SOUND ERROR:", e.message, trashSound.src));
     }
