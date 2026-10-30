@@ -3,7 +3,7 @@
 /* here, we change some of the default styles on our main document elements */
 html, body {
 	margin: 0;
-	background-color: rgb(4, 12, 227);
+	background-color: rgb(54, 58, 176);
 }
 
 @media(max-width: 767px) {

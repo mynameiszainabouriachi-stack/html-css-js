@@ -1,0 +1,137 @@
+let iconSize = 320;
+let img;
+let activeImg;
+let imgHeight = 400;
+let imgWidth = imgHeight * (1668 / 2388);
+let trashImg, keepfolderImg;
+let imagesLoaded = 0;
+let gap = 40;
+
+let activeLetterType = 0;
+let activeLetterState = 0;
+
+let letterX, letterY;
+let dragging = false;
+let wasDragged = false;
+let offsetX = 0;
+let offsetY = 0;
+
+const letters = [
+  { files: ["./pub-front.webp", "pub-back.webp", "pub-open.webp"] },
+  { files: ["party-front.webp", "party-back.webp", "party-open.webp"] },
+  { files: ["love-front.webp", "love-back.webp", "love-open.webp"] },
+  { files: ["pay-front.webp", "pay-back.webp", "pay-open.webp"] },
+];
+
+async function loadimages() {
+  await letters.forEach(async (letter) => {
+    letter.closedImg = await loadImage(letter.files[0]);
+    letter.frontImg = await loadImage(letter.files[1]);
+    letter.openImg = await loadImage(letter.files[2]);
+    imagesLoaded++;
+  });
+
+  trashImg = await loadImage("trash.webp");
+  imagesLoaded++;
+  folderImg = await loadImage("keep-folder.webp");
+  imagesLoaded++;
+}
+
+async function setup() {
+  // Load the image.
+
+  await loadimages();
+
+  print(letters);
+  createCanvas(windowWidth, windowHeight);
+
+  letterX = width / 2;
+  letterY = height / 2;
+}
+
+function draw() {
+  background(255, 253, 240);
+  if (imagesLoaded == letters.length + 2) {
+    //const activeLetter = letters[activeLetterType];
+
+    let activeImg;
+    let iconW = iconSize * (1668 / 2388);
+    let pad = 50;
+    image(trashImg, -pad, height - iconSize + pad, iconW, iconSize);
+    image(
+      folderImg,
+      width - iconW - 0.01,
+      height - iconSize + pad,
+      iconW,
+      iconSize
+    );
+
+    if (activeLetterState == 0) {
+      activeImg = letters[activeLetterType].closedImg;
+    } else if (activeLetterState == 1) {
+      activeImg = letters[activeLetterType].frontImg;
+    } else {
+      activeImg = letters[activeLetterType].openImg;
+    }
+
+    let imgHeight = height * 1.1;
+    let imgWidth = imgHeight * (1668 / 2388);
+    image(
+      activeImg,
+      letterX - imgWidth / 2,
+      letterY - imgHeight / 2,
+      imgWidth,
+      imgHeight
+    );
+    //image(activeImg, width / 2 - imgWidth / 2, height / 2 - imgHeight / 2, imgWidth, imgHeight);
+  }
+}
+
+function overLetter() {
+  let iconW = iconSize * (1668 / 2388);
+  let pad = 50;
+  let onBottom = mouseY > height - iconSize + pad;
+  let onTrash = mouseX < iconW - pad;
+  let onFolder = mouseX > width - iconW - 20;
+  return onBottom && (onTrash || onFolder);
+}
+
+function mousePressed() {
+  const over = overLetter();
+  if (activeLetterState == 2) {
+    dragging = true;
+    wasDragged = false;
+    offsetX = mouseX - letterX;
+    offsetY = mouseY - letterY;
+  }
+}
+
+function mouseDragged() {
+    print("hi")
+    letterX = mouseX - offsetX;
+    letterY = mouseY - offsetY;
+    wasDragged = true;
+}
+
+function mouseReleased() {
+  if (dragging) {
+    dragging = false;
+    if (overLetter) {
+      activeLetterState = 0;
+      activeLetterType++;
+      activeLetterType = activeLetterType % letters.length;
+    }
+    letterX = width / 2;
+    letterY = height / 2;
+  }
+}
+
+function mouseClicked() {
+  activeLetterState++;
+  activeLetterState = activeLetterState % 3;
+
+  if (activeLetterState == 0) {
+    activeLetterType++;
+    activeLetterType = activeLetterType % letters.length;
+  }
+}
