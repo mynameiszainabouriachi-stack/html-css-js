@@ -6,6 +6,8 @@ let imgWidth = imgHeight * (1668 / 2388);
 let trashImg, keepfolderImg;
 let imagesLoaded = 0;
 let font;
+let folderSound;
+let trashSound;
 let gap = 40;
 
 let activeLetterType = 0;
@@ -35,6 +37,8 @@ async function loadimages() {
   trashImg = await loadImage("trash.webp");
   imagesLoaded++;
   folderImg = await loadImage("keep-folder.webp");
+  folderSound = new Audio("folder-sound.mp3");
+  trashSound = new Audio("trash-sound.mp3");
   imagesLoaded++;
 }
 
@@ -154,6 +158,14 @@ function mouseDragged() {
 function mouseReleased() {
   if (dragging) {
     dragging = false;
+    if (mouseX > width - iconSize * (1668 / 2388) - 20 && mouseY > height - iconSize + 50) {
+      folderSound.currentTime = 0;
+      folderSound.play().catch((e) => console.log("SOUND ERROR:", e.message, folderSound.src));
+    }
+        if (mouseX < iconSize * (1668 / 2388) - 50 && mouseY > height - iconSize + 50) {
+      trashSound.currentTime = 0;
+      trashSound.play().catch((e) => console.log("SOUND ERROR:", e.message, trashSound.src));
+    }
     if (overLetter) {
       activeLetterState = 0;
       activeLetterType++;
@@ -163,6 +175,7 @@ function mouseReleased() {
     letterY = height / 2;
   }
 }
+
 
 function mouseClicked() {
   activeLetterState++;
